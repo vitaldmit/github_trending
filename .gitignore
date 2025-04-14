@@ -170,4 +170,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-github_trending_repos.json
+github_trending_history.json
