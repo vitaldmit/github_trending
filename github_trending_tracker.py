@@ -114,7 +114,7 @@ def format_repos_for_telegram(repos):
     today = datetime.now().strftime("%Y-%m-%d")
 
     if not repos:
-        return f"<b>GitHub Trending Update ({today})</b> No new trending repositories found today."
+        return None
 
     message = f"<b>🔥 New GitHub Trending Repositories ({today})</b>\n\n"
 
@@ -156,14 +156,16 @@ def main():
 
     # Send all new repositories as a single message to Telegram
     message = format_repos_for_telegram(new_repos)
-    success = send_to_telegram(message, telegram_config)
 
-    if success:
-        logger.info("Sent update to Telegram ✓")
-    else:
-        logger.error("Failed to send update to Telegram ✗")
+    if message:
+        success = send_to_telegram(message, telegram_config)
 
-    logger.info(f"Total repositories tracked: {len(history)}")
+        if success:
+            logger.info("Sent update to Telegram ✓")
+        else:
+            logger.error("Failed to send update to Telegram ✗")
+
+        logger.info(f"Total repositories tracked: {len(history)}")
 
 
 if __name__ == "__main__":
